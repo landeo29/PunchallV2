@@ -4,6 +4,9 @@ import Footer from './components/layout/Footer';
 
 import Inicio from './pages/Inicio';
 import SobreNosotros from './pages/SobreNosotros';
+import Soluciones from "./pages/Soluciones.jsx";
+import ResponsabilidadSocial from "./pages/ResponsabilidadSocial.jsx";
+import Colaboracion from "./pages/Colaboracion.jsx";
 function App() {
     return (
         <Router>
@@ -13,6 +16,9 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Inicio />} />
                         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
+                        <Route path="/soluciones" element={<Soluciones />} />
+                        <Route path="/responsabilidad-social" element={<ResponsabilidadSocial />} />
+                        <Route path="/colaboracion" element={<Colaboracion />} />
                     </Routes>
                 </main>
                 <Footer />
