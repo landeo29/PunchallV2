@@ -2,14 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FOOTER_QUICK_LINKS, FOOTER_SUPPORT_LINKS, COMPANY_INFO, SOCIAL_LINKS } from '../../utils/constants.js';
 
-// Import del logo
-import logo from '../../assets/images/index/Hero/silder1.webp';
+import logo from '../../assets/images/logo/foot.webp';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
     const [hoveredSocial, setHoveredSocial] = useState(null);
 
-    // Redes sociales con iconos
     const socialLinksArray = [
         {
             name: 'LinkedIn',
@@ -61,7 +59,6 @@ const Footer = () => {
     return (
         <footer className="relative bg-neutral-900 overflow-hidden">
 
-            {/* Patrón de fondo */}
             <div className="absolute inset-0 pointer-events-none opacity-5">
                 <div
                     className="absolute inset-0"
@@ -73,53 +70,53 @@ const Footer = () => {
                 />
             </div>
 
-            {/* Línea superior */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-600/30 to-transparent" />
 
             <div className="container-custom relative z-10">
 
-                {/* Sección principal */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 py-16 sm:py-20">
 
-                    {/* Columna 1 - Logo y descripción */}
                     <div className="space-y-6">
                         <Link to="/" className="inline-block group">
-                            <img
-                                src={logo}
-                                alt="PUNCHALL Logo"
-                                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
-                                onError={(e) => {
-                                    e.target.style.display = 'none';
-                                    e.target.nextSibling.style.display = 'flex';
-                                }}
-                            />
-                            <div className="hidden items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600
-                              flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
-                                              d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                    </svg>
+                            <div className="flex justify-center md:justify-start">
+                                <img
+                                    src={logo}
+                                    alt="PUNCHALL Logo"
+                                    className="h-16 w-auto transition-transform duration-300 group-hover:scale-105"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        e.target.nextSibling.style.display = 'flex';
+                                    }}
+                                />
+                                <div className="hidden items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600
+                      flex items-center justify-center">
+                                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
+                                                  d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-2xl font-black text-white">PUNCHALL</span>
                                 </div>
-                                <span className="text-2xl font-black text-white">PUNCHALL</span>
                             </div>
                         </Link>
 
-                        <p className="text-neutral-400 leading-relaxed">
+                        <p className="text-neutral-400 leading-relaxed text-center md:text-left">
                             Construyendo soluciones tecnológicas inclusivas que transforman vidas
                             y abren oportunidades para todos.
                         </p>
 
-                        {/* Email */}
-                        <a
+                        <div className="flex justify-center md:justify-start">
+
+                            <a
                             href={`mailto:${COMPANY_INFO.email}`}
                             className="group inline-flex items-center gap-3 text-neutral-400
-                       hover:text-white transition-colors duration-300"
-                        >
+                            hover:text-white transition-colors duration-300"
+                            >
                             <div className="w-10 h-10 rounded-lg bg-neutral-800 border border-neutral-700
-                            flex items-center justify-center flex-shrink-0
-                            group-hover:bg-blue-600 group-hover:border-blue-600
-                            transition-all duration-300">
+                      flex items-center justify-center flex-shrink-0
+                      group-hover:bg-blue-600 group-hover:border-blue-600
+                      transition-all duration-300">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -128,8 +125,8 @@ const Footer = () => {
                             <span className="font-medium">{COMPANY_INFO.email}</span>
                         </a>
                     </div>
+                </div>
 
-                    {/* Columna 2 - Enlaces Rápidos */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6">
                             Enlaces Rápidos
@@ -156,7 +153,6 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Columna 3 - Donaciones y Apoyo */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6">
                             Donaciones y Apoyo
@@ -204,13 +200,10 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Separador */}
             <div className="border-t border-neutral-800" />
 
-            {/* Redes sociales y Copyright */}
             <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-8">
 
-                {/* Redes sociales */}
                 <div className="flex items-center gap-4">
                     <span className="text-sm text-neutral-500 font-medium">Síguenos:</span>
                     <div className="flex items-center gap-3">
@@ -234,7 +227,6 @@ const Footer = () => {
                         {social.icon}
                             </div>
 
-                        {/* Tooltip */}
                         <div className={`absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap
                                 px-3 py-1.5 rounded-lg bg-neutral-800 border border-neutral-700
                                 text-xs font-medium text-white shadow-lg
@@ -251,7 +243,6 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Copyright */}
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-neutral-500">
                 <p className="flex items-center gap-2">
                     <span>© {currentYear} PUNCHALL</span>

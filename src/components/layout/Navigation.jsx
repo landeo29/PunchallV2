@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NAVIGATION_ITEMS } from '../../utils/constants.js';
 
-// Import del logo
-import logo from '../../assets/images/index/Testimonial/test.jpeg';
+import logo from '../../assets/images/logo/nav.webp';
 
 const Navigation = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,11 +22,7 @@ const Navigation = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Cerrar menú móvil al cambiar de ruta
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-        window.scrollTo(0, 0); // Scroll to top en cada cambio de página
-    }, [location.pathname]);
+
 
     useEffect(() => {
         if (isMobileMenuOpen) {
@@ -37,19 +32,14 @@ const Navigation = () => {
         }
     }, [isMobileMenuOpen]);
 
-    // Determinar si la ruta está activa
     const isActiveRoute = (path) => {
         return location.pathname === path;
     };
 
-    const handleNavClick = (path) => {
-        navigate(path);
-        setIsMobileMenuOpen(false);
-    };
+
 
     return (
         <>
-            {/* Barra de progreso superior */}
             <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-800 z-[60]">
                 <div
                     className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 transition-all duration-300 ease-out
@@ -58,55 +48,43 @@ const Navigation = () => {
                 />
             </div>
 
-            {/* Navbar Flotante Premium */}
             <nav
                 className="fixed top-6 left-3 right-3 lg:left-6 lg:right-6 z-50"
                 aria-label="Navegación principal"
             >
-                {/* Glow effect exterior */}
                 <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20
                        rounded-[1.75rem] blur-xl opacity-60" />
 
-                {/* Contenedor principal */}
                 <div className="relative rounded-[1.75rem] overflow-hidden
                        shadow-[0_20px_70px_-15px_rgba(0,0,0,0.5)]">
 
-                    {/* Fondo con glassmorphism mejorado */}
                     <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/90 via-neutral-700/90 to-neutral-800/90
                          backdrop-blur-3xl" />
 
-                    {/* Patrón de textura sutil */}
                     <div className="absolute inset-0 opacity-[0.02]"
                          style={{
                              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                          }}
                     />
 
-                    {/* Gradiente superior brillante */}
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-                    {/* Gradiente lateral izquierdo */}
                     <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
 
-                    {/* Gradiente lateral derecho */}
                     <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
 
-                    {/* Contenido del navbar */}
                     <div className="relative px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-[4.5rem]">
 
-                            {/* Logo con animación mejorada */}
                             <Link
                                 to="/"
                                 className="flex items-center group relative z-10"
                                 aria-label="PUNCHALL - Ir al inicio"
                             >
-                                {/* Aura del logo */}
                                 <div className="absolute -inset-3 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0
                               rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
                                 <div className="relative">
-                                    {/* Logo con efecto de elevación */}
                                     <div className="relative transform transition-all duration-500
                                 group-hover:scale-110 group-hover:rotate-2">
                                         <img
@@ -118,7 +96,6 @@ const Navigation = () => {
                                                 e.target.nextSibling.style.display = 'flex';
                                             }}
                                         />
-                                        {/* Fallback */}
                                         <div className="hidden items-center gap-2">
                                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600
                                                           flex items-center justify-center">
@@ -131,15 +108,12 @@ const Navigation = () => {
                                         </div>
                                     </div>
 
-                                    {/* Reflejo sutil debajo del logo */}
                                     <div className="absolute -bottom-2 left-0 right-0 h-8 bg-gradient-to-b from-blue-500/20 to-transparent
                                 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                 </div>
                             </Link>
 
-                            {/* Desktop Navigation */}
                             <div className="hidden lg:flex items-center gap-1.5">
-                                {/* Links de navegación */}
                                 <div className="flex items-center gap-1 px-2 py-2 rounded-2xl bg-white/[0.03]">
                                     {NAVIGATION_ITEMS.filter(item => item.id !== 'contacto').map((item) => (
                                         <Link
@@ -148,7 +122,6 @@ const Navigation = () => {
                                             className="group relative px-5 py-2.5 rounded-xl font-medium text-[13px] tracking-wide
                                 transition-all duration-300"
                                         >
-                                            {/* Fondo activo con gradiente suave */}
                                             <div className={`absolute inset-0 rounded-xl transition-all duration-300
                                     ${isActiveRoute(item.path)
                                                 ? 'bg-gradient-to-br from-blue-500/20 to-indigo-500/20 shadow-lg shadow-blue-500/10'
@@ -156,12 +129,10 @@ const Navigation = () => {
                                             }`}
                                             />
 
-                                            {/* Borde activo luminoso */}
                                             {isActiveRoute(item.path) && (
                                                 <div className="absolute inset-0 rounded-xl border border-blue-400/30" />
                                             )}
 
-                                            {/* Texto con gradiente cuando está activo */}
                                             <span className={`relative z-10 transition-all duration-300
                                       ${isActiveRoute(item.path)
                                                 ? 'text-white font-semibold'
@@ -170,7 +141,6 @@ const Navigation = () => {
                         {item.label}
                       </span>
 
-                                            {/* Indicador inferior animado */}
                                             {isActiveRoute(item.path) && (
                                                 <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1
                                        bg-blue-400 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]
@@ -180,40 +150,31 @@ const Navigation = () => {
                                     ))}
                                 </div>
 
-                                {/* Separador elegante */}
                                 <div className="h-8 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent mx-2" />
 
-                                {/* Botón Contáctanos Premium */}
                                 <Link
                                     to="/contacto"
                                     className="group relative"
                                 >
-                                    {/* Aura externa del botón */}
                                     <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-indigo-600
                                 rounded-2xl blur-2xl opacity-40 group-hover:opacity-70
                                 transition-all duration-500 animate-pulse" />
 
-                                    {/* Container del botón */}
                                     <div className="relative overflow-hidden rounded-xl">
-                                        {/* Gradiente de fondo animado */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600
                                   bg-[length:200%_100%] animate-gradient" />
 
-                                        {/* Efecto de brillo que cruza */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
                                   -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-                                        {/* Borde luminoso */}
                                         <div className="absolute inset-0 rounded-xl border border-white/20
                                   group-hover:border-white/40 transition-colors duration-300" />
 
-                                        {/* Contenido del botón */}
                                         <div className="relative flex items-center gap-2.5 px-7 py-3">
                       <span className="font-semibold text-[13px] text-white tracking-wide">
                         Contáctanos
                       </span>
 
-                                            {/* Ícono con animación */}
                                             <div className="relative">
                                                 <svg
                                                     className="w-[18px] h-[18px] text-white transition-all duration-300
@@ -230,7 +191,6 @@ const Navigation = () => {
                                                     />
                                                 </svg>
 
-                                                {/* Indicador de notificación */}
                                                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full
                                        shadow-[0_0_10px_rgba(74,222,128,0.8)] animate-pulse" />
                                             </div>
@@ -239,7 +199,6 @@ const Navigation = () => {
                                 </Link>
                             </div>
 
-                            {/* Mobile Menu Button Premium */}
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className="lg:hidden relative w-12 h-12 rounded-xl flex items-center justify-center
@@ -250,7 +209,6 @@ const Navigation = () => {
                                 aria-expanded={isMobileMenuOpen}
                                 aria-controls="mobile-menu"
                             >
-                                {/* Glow effect en hover */}
                                 <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10
                               rounded-xl blur-xl transition-all duration-300" />
 
@@ -266,25 +224,19 @@ const Navigation = () => {
                         </div>
                     </div>
 
-                    {/* Gradiente inferior brillante */}
                     <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 </div>
             </nav>
 
-            {/* Mobile Menu Premium */}
             <div className={`lg:hidden fixed inset-0 z-40 transition-all duration-500
                      ${isMobileMenuOpen ? 'visible' : 'invisible'}`}>
 
-                {/* Backdrop con efecto */}
                 <div className={`absolute inset-0 transition-all duration-500
                        ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Gradiente de fondo */}
                     <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900" />
 
-                    {/* Efecto de blur */}
                     <div className="absolute inset-0 backdrop-blur-3xl bg-black/60" />
 
-                    {/* Patrón decorativo */}
                     <div className="absolute inset-0 opacity-10"
                          style={{
                              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
@@ -293,7 +245,6 @@ const Navigation = () => {
                     />
                 </div>
 
-                {/* Contenido del menú */}
                 <div className={`relative h-full overflow-y-auto transition-all duration-700
                        ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
                      onClick={() => setIsMobileMenuOpen(false)}>
@@ -301,7 +252,6 @@ const Navigation = () => {
                     <div className="min-h-full flex flex-col justify-center px-6 py-20"
                          onClick={(e) => e.stopPropagation()}>
 
-                        {/* Navigation Items */}
                         <div className="space-y-3 mb-12">
                             {NAVIGATION_ITEMS.map((item, index) => (
                                 <Link
@@ -314,7 +264,6 @@ const Navigation = () => {
                                     style={{ transitionDelay: `${index * 50}ms` }}
                                     aria-current={isActiveRoute(item.path) ? 'page' : undefined}
                                 >
-                                    {/* Fondo con gradiente */}
                                     <div className={`absolute inset-0 transition-all duration-300
                                 ${isActiveRoute(item.path)
                                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600'
@@ -322,12 +271,10 @@ const Navigation = () => {
                                     }`}
                                     />
 
-                                    {/* Borde luminoso cuando está activo */}
                                     {isActiveRoute(item.path) && (
                                         <div className="absolute inset-0 rounded-xl border-2 border-white/40" />
                                     )}
 
-                                    {/* Contenido */}
                                     <div className="relative px-6 py-5 flex items-center justify-between">
                     <span className={`font-semibold text-lg transition-colors duration-300
                                     ${isActiveRoute(item.path) ? 'text-white' : 'text-neutral-50'}`}>
@@ -351,7 +298,6 @@ const Navigation = () => {
                             ))}
                         </div>
 
-                        {/* Social Links */}
                         <div className="pt-8 border-t border-white/20">
                             <h2 className="text-center text-neutral-50 text-base font-semibold mb-6">Síguenos en redes sociales</h2>
                             <div className="flex justify-center gap-4" role="list">
