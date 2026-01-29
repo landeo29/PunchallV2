@@ -44,43 +44,46 @@ const HeroGrid = () => {
     const cards = [
         {
             type: 'text',
-            icon: 'https://img.icons8.com/ios-filled/100/teamwork.png',
-            title: 'Innovación en Equipo',
-            description: 'Nuestro equipo trabaja en conjunto para crear soluciones tecnológicas de vanguardia.',
+            icon: 'https://img.icons8.com/ios-filled/100/code.png',
+            title: 'Experiencia Real',
+            description: 'Fundada por ingenieros que entienden la discapacidad desde la experiencia y la excelencia técnica.',
             gradient: 'from-blue-500 to-cyan-500',
         },
         {
             type: 'image',
             image: heroS1,
+            alt: 'Equipo Punchay trabajando en soluciones de accesibilidad web',
         },
         {
             type: 'text',
-            icon: 'https://img.icons8.com/ios-filled/100/robot-2.png',
-            title: 'Tecnología de Futuro',
-            description: 'Soluciones diseñadas para superar los retos del mañana.',
+            icon: 'https://img.icons8.com/ios-filled/100/accessibility2.png',
+            title: 'Código como Equidad',
+            description: 'Transformamos el código en una herramienta de equidad global, eliminando barreras digitales.',
             gradient: 'from-indigo-500 to-purple-500',
         },
         {
             type: 'image',
             image: heroS2,
+            alt: 'Desarrollo de software inclusivo y accesible',
         },
         {
             type: 'text',
-            icon: 'https://img.icons8.com/ios-filled/100/light-on.png',
-            title: 'Creatividad e Innovación',
-            description: 'Transformamos ideas en proyectos exitosos con resultados visibles.',
+            icon: 'https://img.icons8.com/ios-filled/100/online-support.png',
+            title: 'Impacto Medible',
+            description: 'Una respuesta concreta a la brecha tecnológica y laboral, con resultados tangibles.',
             gradient: 'from-purple-500 to-pink-500',
         },
         {
             type: 'image',
             image: heroS3,
+            alt: 'Capacitación técnica inclusiva en tecnología',
         },
     ];
 
     return (
         <section
             ref={sectionRef}
-            className="relative py-20 sm:py-28 lg:py-32 overflow-hidden"
+            className="relative pt-32 pb-20 sm:pb-28 lg:pb-32 overflow-hidden"
         >
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50" />
 
@@ -140,25 +143,28 @@ const HeroGrid = () => {
                         bg-white/80 backdrop-blur-sm border border-blue-200/50 shadow-lg">
                         <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
                         <span className="text-sm font-bold tracking-wider uppercase text-blue-700">
-              Nuestra Esencia
+              El Origen
             </span>
                         <div className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" style={{ animationDelay: '0.5s' }} />
                     </div>
 
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-neutral-900 leading-tight mb-6">
-                        Conoce a{' '}
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-neutral-900 leading-tight mb-6">
+                        Sobre Nosotros:{' '}
                         <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                PUNCHALL
+                Ingeniería con ADN Inclusivo
               </span>
                             <div className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-blue-400/30 via-indigo-400/30 to-purple-400/30
                             blur-lg animate-pulse" />
             </span>
-                    </h2>
+                    </h1>
 
-                    <p className="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-                        Innovación y tecnología para transformar el futuro digital con{' '}
-                        <span className="font-semibold text-blue-700">inclusión y accesibilidad</span>
+                    <p className="text-lg sm:text-xl text-neutral-700 max-w-4xl mx-auto leading-relaxed">
+                        Punchay no nació solo como una Software Factory, sino como una{' '}
+                        <span className="font-bold text-blue-700">respuesta a la brecha tecnológica y laboral</span>.
+                        Fundada por ingenieros que entienden la discapacidad desde la experiencia y la excelencia técnica,
+                        nuestra misión es{' '}
+                        <span className="font-bold text-indigo-700">transformar el código en una herramienta de equidad global</span>.
                     </p>
                 </div>
 
@@ -197,7 +203,7 @@ const HeroGrid = () => {
                                     transition-all duration-500 shadow-lg`}>
                                                 <img
                                                     src={card.icon}
-                                                    alt={card.title}
+                                                    alt=""
                                                     className="w-12 h-12 brightness-0 invert opacity-90"
                                                 />
                                             </div>
@@ -236,7 +242,7 @@ const HeroGrid = () => {
                                         <div className="relative h-80 overflow-hidden">
                                             <img
                                                 src={card.image}
-                                                alt="PUNCHALL"
+                                                alt={card.alt}
                                                 className="w-full h-full object-cover transform transition-transform duration-700
                                  group-hover:scale-110"
                                             />
@@ -250,14 +256,6 @@ const HeroGrid = () => {
                                                      backgroundSize: '20px 20px',
                                                  }}
                                             />
-
-                                            <div className="absolute inset-0 flex items-end justify-center p-6
-                                    opacity-0 group-hover:opacity-100
-                                    transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                                <div className="text-center">
-
-                                                </div>
-                                            </div>
                                         </div>
 
                                         <div className="absolute inset-0 rounded-2xl border border-white/20
@@ -271,11 +269,14 @@ const HeroGrid = () => {
 
                 <div className={`mt-16 text-center transition-all duration-1000 delay-1000
                        ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl
+                    <div className="inline-flex items-center gap-3 px-8 py-4 rounded-xl
                         bg-white/80 backdrop-blur-sm border border-blue-200/50 shadow-lg">
-
+                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
                         <span className="text-sm font-semibold text-neutral-700">
-              Construyendo el futuro con tecnología accesible para todos
+              Excelencia técnica + Experiencia real en discapacidad = Soluciones verdaderamente inclusivas
             </span>
                     </div>
                 </div>

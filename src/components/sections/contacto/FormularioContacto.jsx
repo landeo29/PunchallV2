@@ -1,37 +1,34 @@
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
+
 import imgForm from '../../../assets/images/contacto/form.webp';
 
 const FormularioContacto = () => {
     const [isInView, setIsInView] = useState(false);
     const [isSending, setIsSending] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-    const formRef = useRef(null);
-    const sectionRef = useRef(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [formData, setFormData] = useState({
+        nombre: '',
+        empresa: '',
+        email: '',
+        pais: '',
+        interes: '',
+        mensaje: ''
+    });
+    const [errors, setErrors] = useState({});
 
-    const particles = useMemo(() =>
-            Array.from({ length: 12 }, (_, i) => ({
-                id: i,
-                left: 6 + (i * 8),
-                top: 10 + (i % 3) * 30,
-                color: ['#818cf820', '#6366f120', '#8b5cf620'][i % 3],
-                duration: 12 + i * 1.5,
-                delay: i * 0.4,
-            }))
-        , []);
+    const sectionRef = useRef(null);
+    const formRef = useRef(null);
 
     useEffect(() => {
-        // Inicializar EmailJS
-        emailjs.init("PBH08utFp5vqfUAvv");
-
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsInView(true);
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.2 }
         );
 
         if (sectionRef.current) {
@@ -47,11 +44,9 @@ const FormularioContacto = () => {
 
     useEffect(() => {
         const handleMouseMove = (e) => {
-            if (!sectionRef.current) return;
-            const rect = sectionRef.current.getBoundingClientRect();
-            setMousePos({
-                x: ((e.clientX - rect.left) / rect.width) * 100,
-                y: ((e.clientY - rect.top) / rect.height) * 100,
+            setMousePosition({
+                x: (e.clientX / window.innerWidth - 0.5) * 20,
+                y: (e.clientY / window.innerHeight - 0.5) * 20,
             });
         };
 
@@ -59,50 +54,152 @@ const FormularioContacto = () => {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
+    const paises = [
+        'Perú', 'Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Ecuador',
+        'Paraguay', 'Uruguay', 'Venezuela', 'México', 'Estados Unidos', 'Canadá',
+        'España', 'Otro'
+    ];
+
+    const intereses = [
+        'Auditoría de Accesibilidad',
+        'Desarrollo de Software',
+        'Outsourcing de Talento',
+        'Inversión Social / Donación',
+        'Alianza Estratégica',
+        'Mentoría Técnica',
+        'Otro'
+    ];
+
+    const canales = [
+        {
+            id: 1,
+            tipo: 'Consultas Comerciales',
+            email: 'ventas@punchay.dev',
+            descripcion: 'Auditorías, desarrollo y servicios tecnológicos',
+            icon: '💼',
+            color: '#3b82f6',
+        },
+        {
+            id: 2,
+            tipo: 'Alianzas e Impacto',
+            email: 'hola@punchay.dev',
+            descripcion: 'Colaboraciones, inversión social y mentoría',
+            icon: '🤝',
+            color: '#10b981',
+        },
+        {
+            id: 3,
+            tipo: 'Atención Directa',
+            link: 'https://wa.me/51934082901?text=Hola%20Punchay%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios',
+            descripcion: 'WhatsApp: +51 934 082 901',
+            icon: '💬',
+            color: '#8b5cf6',
+        },
+    ];
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        if (errors[name]) {
+            setErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.nombre.trim()) {
+            newErrors.nombre = 'El nombre es obligatorio';
+        }
+
+        if (!formData.empresa.trim()) {
+            newErrors.empresa = 'La empresa u organización es obligatoria';
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = 'El correo electrónico es obligatorio';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = 'El correo electrónico no es válido';
+        }
+
+        if (!formData.pais) {
+            newErrors.pais = 'Por favor seleccione un país';
+        }
+
+        if (!formData.interes) {
+            newErrors.interes = 'Por favor seleccione su interés principal';
+        }
+
+        if (!formData.mensaje.trim()) {
+            newErrors.mensaje = 'El mensaje es obligatorio';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const name = e.target.user_name.value.trim();
-        const email = e.target.user_email.value.trim();
-        const message = e.target.message.value.trim();
-
-        if (!name || !email || !message) {
+        if (!validateForm()) {
             Swal.fire({
-                icon: "warning",
-                title: "Campos vacíos",
-                text: "Por favor, completa todos los campos antes de enviar.",
-                confirmButtonColor: "#6366f1",
+                icon: 'warning',
+                title: 'Campos Incompletos',
+                text: 'Por favor complete todos los campos requeridos',
+                confirmButtonColor: '#3b82f6',
             });
             return;
         }
 
-        const params = {
-            from_name: name,
-            email_id: email,
-            mensaje: message,
-        };
-
         setIsSending(true);
 
         try {
-            await emailjs.send("service_ias3bue", "template_tpnb3zl", params);
+            const templateParams = {
+                user_name: formData.nombre,
+                user_empresa: formData.empresa,
+                user_email: formData.email,
+                user_pais: formData.pais,
+                user_interes: formData.interes,
+                message: formData.mensaje,
+            };
+
+            await emailjs.send(
+                'service_ias3bue',
+                'template_tpnb3zl',
+                templateParams,
+                'PBH08utFp5vqfUAvv'
+            );
 
             Swal.fire({
-                icon: "success",
-                title: "¡Mensaje enviado!",
-                text: "Tu mensaje ha sido enviado correctamente.",
-                confirmButtonColor: "#10b981",
+                icon: 'success',
+                title: '¡Mensaje Enviado!',
+                text: 'Gracias por contactarnos. Nos pondremos en contacto contigo pronto.',
+                confirmButtonColor: '#10b981',
             });
 
-            formRef.current.reset();
-        } catch (error) {
-            console.error("Error al enviar el correo:", error);
+            setFormData({
+                nombre: '',
+                empresa: '',
+                email: '',
+                pais: '',
+                interes: '',
+                mensaje: ''
+            });
+            setErrors({});
 
+        } catch (error) {
+            console.error('Error al enviar:', error);
             Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo enviar el mensaje. Inténtalo nuevamente.",
-                confirmButtonColor: "#ef4444",
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al enviar el mensaje. Por favor intenta nuevamente.',
+                confirmButtonColor: '#ef4444',
             });
         } finally {
             setIsSending(false);
@@ -112,191 +209,391 @@ const FormularioContacto = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative pt-32 pb-20 sm:pb-24 overflow-hidden min-h-screen flex items-center"
+            className="relative pt-32 pb-20 sm:pb-28 lg:pb-32 overflow-hidden"
         >
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50" />
 
-            <div
-                className="absolute inset-0 opacity-20 transition-opacity duration-700"
-                style={{
-                    background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, 
-                      rgba(99, 102, 241, 0.15) 0%, 
-                      rgba(139, 92, 246, 0.1) 30%, 
-                      transparent 60%)`,
-                }}
-            />
-
-            <div className="absolute inset-0 pointer-events-none">
-                {particles.map((particle) => (
-                    <div
-                        key={particle.id}
-                        className="absolute"
-                        style={{
-                            left: `${particle.left}%`,
-                            top: `${particle.top}%`,
-                            width: '120px',
-                            height: '120px',
-                            background: `radial-gradient(circle, ${particle.color}, transparent)`,
-                            borderRadius: '45% 55% 50% 50% / 50% 45% 55% 50%',
-                            animation: `morph ${particle.duration}s ease-in-out infinite`,
-                            animationDelay: `${particle.delay}s`,
-                        }}
-                    />
-                ))}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div
+                    className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl animate-pulse"
+                    style={{
+                        animationDuration: '8s',
+                        transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
+                    }}
+                />
+                <div
+                    className="absolute top-1/4 -right-40 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse"
+                    style={{
+                        animationDuration: '10s',
+                        animationDelay: '2s',
+                        transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`
+                    }}
+                />
             </div>
 
-            <div className="absolute inset-0 opacity-[0.015]">
-                <svg className="w-full h-full">
-                    <defs>
-                        <pattern id="contact-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <circle cx="30" cy="30" r="1" fill="#6366f1" />
-                            <path d="M0 30 L60 30 M30 0 L30 60" stroke="#8b5cf6" strokeWidth="0.5" opacity="0.2" />
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#contact-grid)" />
-                </svg>
+            <div className="absolute inset-0 opacity-[0.03]">
+                <div
+                    style={{
+                        backgroundImage: `radial-gradient(circle, #6366f1 1px, transparent 1px)`,
+                        backgroundSize: '50px 50px',
+                    }}
+                    className="absolute inset-0"
+                />
             </div>
 
             <div className="container-custom relative z-10">
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div className={`text-center mb-16 max-w-4xl mx-auto transition-all duration-1000 delay-200
+                       ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
-                    <div className={`transition-all duration-1000 delay-200
-                         ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+                    <div className="inline-flex items-center gap-3 mb-8 px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-200/50 shadow-lg">
+                        <div className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
+                        <span className="text-xs font-bold tracking-[0.3em] uppercase text-indigo-700">
+              Hablemos
+            </span>
+                        <div className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" style={{ animationDelay: '0.5s' }} />
+                    </div>
 
-                        <div className="relative group">
-                            <div className="absolute -inset-4 bg-gradient-to-r from-indigo-400/30 via-purple-400/30 to-pink-400/30 rounded-3xl blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700" />
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] mb-6">
+                        <span className="text-slate-900">Construyamos el</span>
+                        <br />
+                        <span className="relative inline-block mt-2">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
+                Futuro de la Inclusión
+              </span>
+              <div className="absolute -bottom-2 left-0 right-0 h-3 bg-indigo-400/30 blur-lg animate-pulse" />
+            </span>
+                    </h1>
 
-                            <div className="relative rounded-3xl overflow-hidden border-4 border-white/70 shadow-2xl aspect-[4/5]">
-                                <img
-                                    src={imgForm}
-                                    alt="Contacto Punchay"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    <p className="text-lg sm:text-xl text-slate-700 leading-relaxed max-w-3xl mx-auto">
+                        Ya sea que necesite una{' '}
+                        <span className="font-bold text-indigo-700">auditoría técnica</span>,{' '}
+                        <span className="font-bold text-purple-700">desarrollo de software a medida</span> o quiera{' '}
+                        <span className="font-bold text-pink-700">formar parte de nuestro ecosistema de impacto</span>,
+                        nuestro equipo está listo para asesorarlo.
+                    </p>
+                </div>
+
+                <div className={`mb-16 transition-all duration-1000 delay-400
+                       ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 text-center mb-8">
+                        Canales Directos
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+                        {canales.map((canal, index) => (
+                            <div
+                                key={canal.id}
+                                className={`group relative transition-all duration-1000
+                          ${isInView
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-10'
+                                }`}
+                                style={{ transitionDelay: `${600 + index * 100}ms` }}
+                            >
+                                <div
+                                    className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500"
+                                    style={{ background: `${canal.color}60` }}
                                 />
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                                <div className="relative h-full p-6 rounded-2xl bg-white/90 backdrop-blur-xl border-2 border-white/60 shadow-lg group-hover:shadow-xl transition-all duration-500">
 
-                                <div className="absolute bottom-0 left-0 right-0 p-8">
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
-                                            <div className="w-12 h-12 rounded-lg bg-indigo-500/80 flex items-center justify-center">
-                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="text-center">
+                                        <div
+                                            className="w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center text-3xl shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
+                                            style={{ background: `${canal.color}20` }}
+                                            aria-hidden="true"
+                                        >
+                                            {canal.icon}
+                                        </div>
+
+                                        <h3 className="text-lg font-black text-slate-900 mb-2">
+                                            {canal.tipo}
+                                        </h3>
+
+                                        {canal.email ? (
+
+                                            <a
+                                            href={`mailto:${canal.email}`}
+                                            className="text-base font-bold hover:underline transition-colors duration-300 block mb-2"
+                                            style={{ color: canal.color }}
+                                            >
+                                        {canal.email}
+                                            </a>
+                                            ) : (
+<a
+
+                                                href={canal.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-base font-bold hover:underline transition-colors duration-300 inline-flex items-center gap-2 mb-2"
+                                        style={{ color: canal.color }}
+                                        >
+                                        <span>WhatsApp</span>
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                    </a>
+                                    )}
+
+                                    <p className="text-sm text-slate-600">
+                                        {canal.descripcion}
+                                    </p>
+                                </div>
+                            </div>
+                            </div>
+                            ))}
+                    </div>
+                </div>
+
+                <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-800
+                       ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                        <div className="lg:col-span-5">
+                            <div className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                                <img
+                                    src={imgForm}
+                                    alt="Equipo Punchay listo para asesorarlo en proyectos de accesibilidad web"
+                                    className="w-full h-full object-cover"
+                                />
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
+
+                                <div className="absolute bottom-8 left-8 right-8 space-y-4">
+                                    <div className="p-4 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center flex-shrink-0">
+                                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
                                             <div>
-                                                <div className="text-xs text-neutral-300">Email</div>
-                                                <div className="text-sm font-bold text-white">info@punchay.dev</div>
+                                                <p className="text-xs font-semibold text-white/80">Email General</p>
+                                                <p className="text-sm font-bold text-white">info@punchay.dev</p>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div className="flex items-center gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
-                                            <div className="w-12 h-12 rounded-lg bg-purple-500/80 flex items-center justify-center">
-                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="p-4 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center flex-shrink-0">
+                                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                                 </svg>
                                             </div>
                                             <div>
-                                                <div className="text-xs text-neutral-300">Teléfono</div>
-                                                <div className="text-sm font-bold text-white">+51 934 082 901</div>
+                                                <p className="text-xs font-semibold text-white/80">Teléfono</p>
+                                                <p className="text-sm font-bold text-white">+51 934 082 901</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className={`transition-all duration-1000 delay-400
-                         ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+                        <div className="lg:col-span-7">
+                            <div className="p-8 rounded-2xl bg-white/90 backdrop-blur-xl border-2 border-white/60 shadow-xl">
 
-                        <div className="mb-8">
-                            <div className="inline-flex items-center gap-2 mb-5 px-5 py-2 rounded-full bg-white/70 backdrop-blur-xl border border-indigo-200/50 shadow-lg">
-                                <span className="text-lg">📬</span>
-                                <span className="text-xs font-bold tracking-[0.3em] uppercase text-indigo-700">
-                  Envíanos un Mensaje
-                </span>
+                                <h2 className="text-2xl font-black text-slate-900 mb-6">
+                                    Formulario de Contacto
+                                </h2>
+
+                                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+
+                                    <div>
+                                        <label htmlFor="nombre" className="block text-sm font-bold text-slate-700 mb-2">
+                                            Nombre Completo <span className="text-red-600">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="nombre"
+                                            name="nombre"
+                                            value={formData.nombre}
+                                            onChange={handleChange}
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                errors.nombre ? 'border-red-500' : 'border-slate-300'
+                                            } focus:border-indigo-500 focus:outline-none transition-colors duration-300`}
+                                            aria-required="true"
+                                            aria-invalid={!!errors.nombre}
+                                            aria-describedby={errors.nombre ? "nombre-error" : undefined}
+                                        />
+                                        {errors.nombre && (
+                                            <p id="nombre-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                {errors.nombre}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="empresa" className="block text-sm font-bold text-slate-700 mb-2">
+                                            Empresa / Organización <span className="text-red-600">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="empresa"
+                                            name="empresa"
+                                            value={formData.empresa}
+                                            onChange={handleChange}
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                errors.empresa ? 'border-red-500' : 'border-slate-300'
+                                            } focus:border-indigo-500 focus:outline-none transition-colors duration-300`}
+                                            aria-required="true"
+                                            aria-invalid={!!errors.empresa}
+                                            aria-describedby={errors.empresa ? "empresa-error" : undefined}
+                                        />
+                                        {errors.empresa && (
+                                            <p id="empresa-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                {errors.empresa}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">
+                                            Correo Corporativo <span className="text-red-600">*</span>
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                errors.email ? 'border-red-500' : 'border-slate-300'
+                                            } focus:border-indigo-500 focus:outline-none transition-colors duration-300`}
+                                            aria-required="true"
+                                            aria-invalid={!!errors.email}
+                                            aria-describedby={errors.email ? "email-error" : undefined}
+                                        />
+                                        {errors.email && (
+                                            <p id="email-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                {errors.email}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <div>
+                                            <label htmlFor="pais" className="block text-sm font-bold text-slate-700 mb-2">
+                                                País <span className="text-red-600">*</span>
+                                            </label>
+                                            <select
+                                                id="pais"
+                                                name="pais"
+                                                value={formData.pais}
+                                                onChange={handleChange}
+                                                className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                    errors.pais ? 'border-red-500' : 'border-slate-300'
+                                                } focus:border-indigo-500 focus:outline-none transition-colors duration-300`}
+                                                aria-required="true"
+                                                aria-invalid={!!errors.pais}
+                                                aria-describedby={errors.pais ? "pais-error" : undefined}
+                                            >
+                                                <option value="">Seleccione un país</option>
+                                                {paises.map((pais) => (
+                                                    <option key={pais} value={pais}>{pais}</option>
+                                                ))}
+                                            </select>
+                                            {errors.pais && (
+                                                <p id="pais-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                    {errors.pais}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="interes" className="block text-sm font-bold text-slate-700 mb-2">
+                                                Interés Principal <span className="text-red-600">*</span>
+                                            </label>
+                                            <select
+                                                id="interes"
+                                                name="interes"
+                                                value={formData.interes}
+                                                onChange={handleChange}
+                                                className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                    errors.interes ? 'border-red-500' : 'border-slate-300'
+                                                } focus:border-indigo-500 focus:outline-none transition-colors duration-300`}
+                                                aria-required="true"
+                                                aria-invalid={!!errors.interes}
+                                                aria-describedby={errors.interes ? "interes-error" : undefined}
+                                            >
+                                                <option value="">Seleccione una opción</option>
+                                                {intereses.map((interes) => (
+                                                    <option key={interes} value={interes}>{interes}</option>
+                                                ))}
+                                            </select>
+                                            {errors.interes && (
+                                                <p id="interes-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                    {errors.interes}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="mensaje" className="block text-sm font-bold text-slate-700 mb-2">
+                                            Mensaje <span className="text-red-600">*</span>
+                                        </label>
+                                        <textarea
+                                            id="mensaje"
+                                            name="mensaje"
+                                            value={formData.mensaje}
+                                            onChange={handleChange}
+                                            rows="5"
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${
+                                                errors.mensaje ? 'border-red-500' : 'border-slate-300'
+                                            } focus:border-indigo-500 focus:outline-none transition-colors duration-300 resize-none`}
+                                            aria-required="true"
+                                            aria-invalid={!!errors.mensaje}
+                                            aria-describedby={errors.mensaje ? "mensaje-error" : undefined}
+                                        />
+                                        {errors.mensaje && (
+                                            <p id="mensaje-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-1">
+                                                {errors.mensaje}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSending}
+                                        className="w-full px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg
+                                        shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed
+                                        transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
+                                        flex items-center justify-center gap-3"
+                                        aria-label={isSending ? 'Enviando mensaje...' : 'Enviar mensaje de contacto'}
+                                    >
+                                        {isSending ? (
+                                            <>
+                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                <span>Enviando...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>ENVIAR MENSAJE</span>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
+                                            </>
+                                        )}
+                                    </button>
+
+                                    <p className="text-xs text-slate-600 text-center leading-relaxed mt-4">
+                                        Al contactarnos, usted acepta nuestra{' '}
+                                        <a href="/privacidad" className="text-indigo-600 hover:underline font-semibold">
+                                            Política de Privacidad
+                                        </a>.
+                                        Sus datos serán tratados con la máxima confidencialidad para fines de asesoría técnica y social.
+                                    </p>
+                                </form>
                             </div>
-
-                            <h1 className="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-4">
-                                Contáctanos
-                            </h1>
-
-                            <p className="text-base text-slate-700 leading-relaxed">
-                                Estamos aquí para ayudarte. Completa el formulario y nos pondremos en contacto contigo pronto.
-                            </p>
                         </div>
-
-                        <form
-                            ref={formRef}
-                            onSubmit={handleSubmit}
-                            className="space-y-5"
-                        >
-                            <div>
-                                <label htmlFor="user_name" className="block text-sm font-bold text-slate-900 mb-2">
-                                    Nombre
-                                </label>
-                                <input
-                                    type="text"
-                                    id="user_name"
-                                    name="user_name"
-                                    placeholder="Ingresa tu nombre"
-                                    className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-xl border-2 border-slate-200 focus:border-indigo-500 focus:outline-none transition-colors duration-300 text-slate-900"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="user_email" className="block text-sm font-bold text-slate-900 mb-2">
-                                    Correo Electrónico
-                                </label>
-                                <input
-                                    type="email"
-                                    id="user_email"
-                                    name="user_email"
-                                    placeholder="Ingresa tu correo"
-                                    className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-xl border-2 border-slate-200 focus:border-indigo-500 focus:outline-none transition-colors duration-300 text-slate-900"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-bold text-slate-900 mb-2">
-                                    Mensaje
-                                </label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    rows="5"
-                                    placeholder="Escribe tu mensaje"
-                                    className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-xl border-2 border-slate-200 focus:border-indigo-500 focus:outline-none transition-colors duration-300 resize-none text-slate-900"
-                                    required
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isSending}
-                                className="w-full px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                            >
-                                {isSending ? (
-                                    <>
-                                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        <span>Enviando...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>ENVIAR MENSAJE</span>
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
-                                    </>
-                                )}
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>

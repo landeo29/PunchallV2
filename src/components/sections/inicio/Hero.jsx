@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import slider1 from '../../../assets/images/index/Hero/silder1.webp';
 import slider2 from '../../../assets/images/index/Hero/slider2.webp';
@@ -13,34 +14,43 @@ const Hero = () => {
         {
             id: 1,
             image: slider1,
-            badge: 'Innovación',
-            title: ['Innovación', 'Tecnológica'],
-            highlight: 'Tecnológica',
-            description: 'Tu apoyo puede marcar la diferencia. Con tu donación, ayudamos a construir espacios inclusivos y accesibles para trabajadores con discapacidad.',
-            ctaText: 'Sé parte del cambio',
-            ctaLink: '/colaboracion',
+            badge: '🎯 Cumplimiento Legal',
+            title: ['Ingeniería de Software', 'Inclusiva'],
+            highlight: 'Inclusiva',
+            subtitle: 'Elevamos su Estándar Tecnológico y Legal',
+            description: 'En Punchay, desarrollamos software y aplicaciones móviles con accesibilidad nativa. Ayudamos a su empresa a cumplir con la Ley 29973 (WCAG 2.1) y a maximizar sus beneficios tributarios mediante soluciones digitales de alto impacto.',
+            ctaPrimary: 'Solicitar Auditoría de Accesibilidad',
+            ctaPrimaryLink: '/contacto',
+            ctaSecondary: 'Ver Portafolio de Soluciones',
+            ctaSecondaryLink: '/soluciones',
             accentColor: 'from-blue-500 to-cyan-500',
         },
         {
             id: 2,
             image: slider2,
-            badge: 'Soluciones',
-            title: ['Experiencia', 'Digital'],
-            highlight: 'Digital',
-            description: 'El futuro es ahora. Transforma tu empresa con nuestras soluciones tecnológicas personalizadas. ¡Contrata nuestros servicios y marca la diferencia hoy mismo!',
-            ctaText: 'Contáctanos Ahora',
-            ctaLink: '/contacto',
+            badge: '✅ Certificación WCAG',
+            title: ['Diagnóstico y', 'Certificación'],
+            highlight: 'Certificación',
+            subtitle: 'Identifique Barreras Digitales',
+            description: 'Identificación de barreras digitales y entrega del Sello de Accesibilidad Punchay. Auditorías validadas por ingenieros certificados con experiencia real en discapacidad.',
+            ctaPrimary: 'Solicitar Diagnóstico',
+            ctaPrimaryLink: '/contacto',
+            ctaSecondary: 'Conocer Más',
+            ctaSecondaryLink: '/soluciones',
             accentColor: 'from-indigo-500 to-purple-500',
         },
         {
             id: 3,
             image: slider3,
-            badge: 'Futuro',
-            title: ['El Futuro', 'es Ahora'],
-            highlight: 'es Ahora',
-            description: 'Explora nuestro sitio y descubre cómo transformamos la tecnología, creando un entorno inclusivo y accesible para todos. Únete a nuestra misión de marcar la diferencia.',
-            ctaText: 'Conoce más',
-            ctaLink: '/sobre-nosotros',
+            badge: '⚡ Remediación',
+            title: ['Corrección de', 'Código'],
+            highlight: 'Código',
+            subtitle: 'Supere Estándares INDECOPI',
+            description: 'Corrección de errores críticos en ARIA, semántica HTML y nombres accesibles. Creación de productos digitales que superan los estándares de INDECOPI desde la primera línea de código.',
+            ctaPrimary: 'Solicitar Remediación',
+            ctaPrimaryLink: '/contacto',
+            ctaSecondary: 'Ver Stack Tecnológico',
+            ctaSecondaryLink: '#tech-stack',
             accentColor: 'from-purple-500 to-pink-500',
         }
     ];
@@ -89,7 +99,7 @@ const Hero = () => {
         <section
             id="inicio"
             className="relative w-full h-screen overflow-hidden bg-neutral-900"
-            aria-label="Slider principal"
+            aria-label="Slider principal de servicios de accesibilidad web"
         >
             <div className="relative h-full w-full">
                 {slides.map((slide, index) => (
@@ -107,7 +117,7 @@ const Hero = () => {
                         >
                             <img
                                 src={slide.image}
-                                alt={slide.title.join(' ')}
+                                alt={`${slide.title.join(' ')} - Soluciones de accesibilidad web WCAG 2.1`}
                                 className="w-full h-full object-cover object-center"
                                 loading={index === 0 ? "eager" : "lazy"}
                             />
@@ -159,25 +169,25 @@ const Hero = () => {
                                     <div className="lg:col-span-7 space-y-6 sm:space-y-8">
 
                                         <div
-                                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full
+                                            className={`inline-flex items-center gap-3 px-5 py-3 rounded-full
                                 bg-white/10 backdrop-blur-md border border-white/20
                                 transition-all duration-1000 delay-100
                                 ${index === currentSlide
                                                 ? 'opacity-100 translate-y-0'
                                                 : 'opacity-0 translate-y-10'}`}
                                         >
-                                            <span className="text-2xl">{slide.badge.split(' ')[0]}</span>
-                                            <span className="text-white font-semibold text-sm tracking-wide">
-                        {slide.badge.split(' ')[1]}
+                                            <span className="text-xl">{slide.badge.split(' ')[0]}</span>
+                                            <span className="text-white font-bold text-sm tracking-wide">
+                        {slide.badge.split(' ').slice(1).join(' ')}
                       </span>
                                             <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${slide.accentColor} animate-pulse`} />
                                         </div>
 
-                                        <div className="space-y-2">
+                                        <div className="space-y-3">
                                             {slide.title.map((line, lineIndex) => (
                                                 <h1
                                                     key={lineIndex}
-                                                    className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl 
+                                                    className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl 
                                     font-display font-black leading-none
                                     transition-all duration-1000
                                     ${index === currentSlide
@@ -192,6 +202,16 @@ const Hero = () => {
                           </span>
                                                 </h1>
                                             ))}
+
+                                            <p
+                                                className={`text-2xl sm:text-3xl text-white/80 font-semibold leading-tight
+                                    transition-all duration-1000 delay-400
+                                    ${index === currentSlide
+                                                    ? 'opacity-100 translate-x-0'
+                                                    : 'opacity-0 -translate-x-10'}`}
+                                            >
+                                                {slide.subtitle}
+                                            </p>
                                         </div>
 
                                         <div
@@ -203,7 +223,7 @@ const Hero = () => {
                                         </div>
 
                                         <p
-                                            className={`text-xl sm:text-2xl text-white/90 leading-relaxed max-w-2xl
+                                            className={`text-lg sm:text-xl text-white/90 leading-relaxed max-w-2xl
                                 font-light tracking-wide
                                 transition-all duration-1000 delay-700
                                 ${index === currentSlide
@@ -214,22 +234,23 @@ const Hero = () => {
                                         </p>
 
                                         <div
-                                            className={`flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-4
+                                            className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4
                                 transition-all duration-1000 delay-900
                                 ${index === currentSlide
                                                 ? 'opacity-100 translate-x-0'
                                                 : 'opacity-0 -translate-x-10'}`}
                                         >
 
-                                            <a
-                                                href={slide.ctaLink}
+                                            <Link
+                                                to={slide.ctaPrimaryLink}
                                                 className="group relative inline-flex items-center gap-3 overflow-hidden"
+                                                aria-label={slide.ctaPrimary}
                                             >
 
-                                            <div className={`absolute -inset-2 bg-gradient-to-r ${slide.accentColor} rounded-2xl blur-xl 
+                                                <div className={`absolute -inset-2 bg-gradient-to-r ${slide.accentColor} rounded-2xl blur-xl 
                                       opacity-50 group-hover:opacity-75 transition-opacity duration-500 animate-pulse`} />
 
-                                            <div className={`relative flex items-center gap-3 px-8 py-4 
+                                                <div className={`relative flex items-center gap-3 px-8 py-4 
                                       bg-gradient-to-r ${slide.accentColor}
                                       text-white font-bold text-base sm:text-lg rounded-xl
                                       shadow-2xl
@@ -237,13 +258,36 @@ const Hero = () => {
                                       group-hover:scale-105 group-active:scale-95
                                       focus:outline-none focus:ring-4 focus:ring-white/30`}>
 
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
                                         -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
-                                                <span className="relative z-10">{slide.ctaText}</span>
+                                                    <span className="relative z-10">{slide.ctaPrimary}</span>
 
+                                                    <svg
+                                                        className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
+                                                              d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                    </svg>
+                                                </div>
+                                            </Link>
+
+                                            <Link
+                                                to={slide.ctaSecondaryLink}
+                                                className="group inline-flex items-center gap-3 px-8 py-4
+                                    rounded-xl bg-white/10 backdrop-blur-xl border-2 border-white/30
+                                    text-white font-bold text-base sm:text-lg
+                                    hover:bg-white/20 hover:border-white/50
+                                    transition-all duration-300
+                                    focus:outline-none focus:ring-4 focus:ring-white/30"
+                                                aria-label={slide.ctaSecondary}
+                                            >
+                                                <span>{slide.ctaSecondary}</span>
                                                 <svg
-                                                    className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                                                    className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -251,70 +295,69 @@ const Hero = () => {
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
                                                           d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                                 </svg>
-                                            </div>
-                                        </a>
-
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="hidden lg:block lg:col-span-5">
-                                    <div
-                                        className={`relative transition-all duration-1000 delay-500
+                                    <div className="hidden lg:block lg:col-span-5">
+                                        <div
+                                            className={`relative transition-all duration-1000 delay-500
                                 ${index === currentSlide
-                                            ? 'opacity-100 translate-x-0 scale-100'
-                                            : 'opacity-0 translate-x-10 scale-95'}`}
-                                        style={{
-                                            transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`,
-                                        }}
-                                    >
-                                        <div className="relative p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10
+                                                ? 'opacity-100 translate-x-0 scale-100'
+                                                : 'opacity-0 translate-x-10 scale-95'}`}
+                                            style={{
+                                                transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`,
+                                            }}
+                                        >
+                                            <div className="relative p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10
                                     shadow-2xl">
 
-                                            <div className="space-y-6">
-                                                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
+                                                <div className="space-y-6">
+                                                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
                                         transform transition-transform duration-500 hover:scale-105">
-                                                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
+                                                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
                                           flex items-center justify-center shadow-lg`}>
-                                                        <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
+                                                            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-bold text-lg">Ley 29973</p>
+                                                            <p className="text-white/60 text-sm">Cumplimiento legal</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p className="text-white font-bold text-lg">Calidad Garantizada</p>
-                                                        <p className="text-white/60 text-sm">Soluciones profesionales</p>
-                                                    </div>
-                                                </div>
 
-                                                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
+                                                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
                                         transform transition-transform duration-500 hover:scale-105"
-                                                     style={{ transitionDelay: '100ms' }}>
-                                                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
+                                                         style={{ transitionDelay: '100ms' }}>
+                                                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
                                           flex items-center justify-center shadow-lg`}>
-                                                        <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                        </svg>
+                                                            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-bold text-lg">WCAG 2.1 AAA</p>
+                                                            <p className="text-white/60 text-sm">Certificación oficial</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p className="text-white font-bold text-lg">Inclusión Real</p>
-                                                        <p className="text-white/60 text-sm">Diversidad en acción</p>
-                                                    </div>
-                                                </div>
 
-                                                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
+                                                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm
                                         transform transition-transform duration-500 hover:scale-105"
-                                                     style={{ transitionDelay: '200ms' }}>
-                                                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
+                                                         style={{ transitionDelay: '200ms' }}>
+                                                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${slide.accentColor} 
                                           flex items-center justify-center shadow-lg`}>
-                                                        <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                                                  d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                        </svg>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-white font-bold text-lg">Innovación Constante</p>
-                                                        <p className="text-white/60 text-sm">Tecnología de punta</p>
+                                                            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-white font-bold text-lg">Beneficios Tributarios</p>
+                                                            <p className="text-white/60 text-sm">Maximice su ROI</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,21 +367,20 @@ const Hero = () => {
                             </div>
                         </div>
                     </div>
-                    </div>
-                    ))}
+                ))}
             </div>
 
             <div className="absolute bottom-8 sm:bottom-12 left-0 right-0 z-30">
                 <div className="container-custom">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
-                        <div className="order-2 sm:order-1 flex gap-3" role="tablist" aria-label="Controles del slider">
+                        <div className="order-2 sm:order-1 flex gap-3" role="tablist" aria-label="Controles del slider de servicios">
                             {slides.map((slide, index) => (
                                 <button
                                     key={slide.id}
                                     onClick={() => goToSlide(index)}
                                     className="group relative"
-                                    aria-label={`Ir a slide ${index + 1}`}
+                                    aria-label={`Ir a servicio ${index + 1}: ${slide.title.join(' ')}`}
                                     aria-selected={index === currentSlide}
                                     role="tab"
                                 >
@@ -366,7 +408,7 @@ const Hero = () => {
                          hover:bg-white/10 transition-all duration-300 group
                          flex items-center justify-center shadow-lg
                          focus:outline-none focus:ring-2 focus:ring-white/50"
-                                aria-label="Slide anterior"
+                                aria-label="Servicio anterior"
                             >
                                 <svg className="w-6 h-6 text-white transition-transform duration-300 group-hover:-translate-x-1"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -380,7 +422,7 @@ const Hero = () => {
                          hover:bg-white/10 transition-all duration-300 group
                          flex items-center justify-center shadow-lg
                          focus:outline-none focus:ring-2 focus:ring-white/50"
-                                aria-label="Siguiente slide"
+                                aria-label="Siguiente servicio"
                             >
                                 <svg className="w-6 h-6 text-white transition-transform duration-300 group-hover:translate-x-1"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -394,7 +436,7 @@ const Hero = () => {
                          hover:bg-white/10 transition-all duration-300
                          flex items-center justify-center shadow-lg
                          focus:outline-none focus:ring-2 focus:ring-white/50"
-                                aria-label={isAutoPlaying ? 'Pausar' : 'Reproducir'}
+                                aria-label={isAutoPlaying ? 'Pausar rotación automática de servicios' : 'Reanudar rotación automática de servicios'}
                             >
                                 {isAutoPlaying ? (
                                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
