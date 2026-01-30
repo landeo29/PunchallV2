@@ -36,7 +36,7 @@ const MisionVisionEvolucionada = () => {
                 'Desarrollo de software con accesibilidad nativa',
                 'Financiamiento de programas de capacitación técnica',
                 'Inserción laboral de talento diverso certificado',
-                'Cumplimiento garantizado de WCAG 2.1 y Ley 29973'
+                'Cumplimiento garantizado de WCAG 2.1'
             ],
             icon: 'target',
             gradient: 'from-blue-500 to-cyan-500',
