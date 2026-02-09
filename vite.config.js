@@ -3,5 +3,8 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/PunchallV2/"
+  base: "/PunchallV2/",
+  build: {
+    sourcemap: true,  
+  },
 });

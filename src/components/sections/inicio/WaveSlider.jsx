@@ -279,7 +279,7 @@ const WaveSlider = () => {
                     onClick={() => setActiveSlide(index)}
                     className="group relative focus:outline-none focus:ring-2 focus:ring-offset-4 focus:ring-neutral-400 rounded-full"
                     aria-label={`Ver ${slide.title} ${slide.titleAccent}`}
-                    aria-selected={index === activeSlide}
+                    aria-current={index === activeSlide ? "true" : "false"}
                 >
                     <div className={`relative overflow-hidden rounded-full transition-all duration-500
                               ${index === activeSlide
