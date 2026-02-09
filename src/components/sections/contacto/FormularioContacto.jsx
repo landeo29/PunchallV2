@@ -543,9 +543,8 @@ const FormularioContacto = () => {
                                             value={formData.mensaje}
                                             onChange={handleChange}
                                             rows="5"
-                                            className={`w-full px-4 py-3 rounded-lg border-2 ${
-                                                errors.mensaje ? 'border-red-500' : 'border-slate-300'
-                                            } focus:border-indigo-500 focus:outline-none transition-colors duration-300 resize-none`}
+                                            className="..."
+                                            aria-label="Escriba su mensaje o consulta detallada"
                                             aria-required="true"
                                             aria-invalid={!!errors.mensaje}
                                             aria-describedby={errors.mensaje ? "mensaje-error" : undefined}

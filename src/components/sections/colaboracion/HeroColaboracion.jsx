@@ -107,7 +107,8 @@ const HeroColaboracion = () => {
             color: '#f59e0b',
             gradient: 'from-amber-500 to-orange-500',
             ctaText: 'Aportar vía PayPal',
-            ctaLink: 'https://www.paypal.com/paypalme/punchall',
+            ctaAriaLabel: 'Realizar donación a Punchay vía PayPal - Se abre en nueva ventana',
+            ctaLink: 'https://www.paypal.com/paypalme/Punchay',
             external: true,
         },
     ];
@@ -334,7 +335,8 @@ const HeroColaboracion = () => {
                                         className={`group/btn w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl
                                 bg-gradient-to-r ${modalidad.gradient} text-white font-bold text-sm
                                 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105`}
-                                        aria-label={`${modalidad.ctaText} - Se abre en nueva ventana`}
+                                        aria-label={modalidad.ctaAriaLabel || modalidad.ctaText}
+
                                         >
                                         <span>{modalidad.ctaText}</span>
                                         <svg className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

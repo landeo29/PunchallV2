@@ -174,7 +174,7 @@ const CTASoluciones = () => {
                         <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight mb-8">
                             Transforma tu Futuro con
                             <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-fuchsia-400">
-                Soluciones PUNCHALL
+                Soluciones Punchay
               </span>
                         </h2>
 

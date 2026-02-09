@@ -7,7 +7,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                // Paleta corporativa PUNCHALL - Accesibilidad WCAG AAA
+                // Paleta corporativa Punchay - Accesibilidad WCAG AAA
                 primary: {
                     50: '#f0f9ff',
                     100: '#e0f2fe',

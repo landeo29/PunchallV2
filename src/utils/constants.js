@@ -11,7 +11,7 @@ export const NAVIGATION_ITEMS = [
 
 // Información de la empresa
 export const COMPANY_INFO = {
-    name: 'PUNCHALL',
+    name: 'Punchay',
     email: 'info@punchay.dev',
     phone: '+51 934 082 901',
     address: 'Lima, Perú',
@@ -26,7 +26,7 @@ export const SOCIAL_LINKS = {
     instagram: 'https://www.instagram.com/punchaygroup/',
     tiktok: 'https://tiktok.com/@punchay3',
     whatsapp: 'https://wa.me/51934082901',
-    github: 'https://github.com/punchall',
+    github: 'https://github.com/Punchay',
 };
 
 // Enlaces del footer

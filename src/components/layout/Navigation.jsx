@@ -79,7 +79,7 @@ const Navigation = () => {
                             <Link
                                 to="/"
                                 className="flex items-center group relative z-10"
-                                aria-label="PUNCHALL - Ir al inicio"
+                                aria-label="Punchay - Ir al inicio"
                             >
                                 <div className="absolute -inset-3 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0
                               rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -89,7 +89,7 @@ const Navigation = () => {
                                 group-hover:scale-110 group-hover:rotate-2">
                                         <img
                                             src={logo}
-                                            alt="PUNCHALL"
+                                            alt="Punchay"
                                             className="h-11 w-auto sm:h-12 drop-shadow-2xl"
                                             onError={(e) => {
                                                 e.target.style.display = 'none';
@@ -104,7 +104,7 @@ const Navigation = () => {
                                                           d="M13 10V3L4 14h7v7l9-11h-7z" />
                                                 </svg>
                                             </div>
-                                            <span className="text-xl font-black text-white">PUNCHALL</span>
+                                            <span className="text-xl font-black text-white">Punchay</span>
                                         </div>
                                     </div>
 

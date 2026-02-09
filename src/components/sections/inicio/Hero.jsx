@@ -381,7 +381,7 @@ const Hero = () => {
                                     onClick={() => goToSlide(index)}
                                     className="group relative"
                                     aria-label={`Ir a servicio ${index + 1}: ${slide.title.join(' ')}`}
-                                    aria-selected={index === currentSlide}
+                                    aria-current={index === currentSlide ? "true" : "false"}
                                     role="tab"
                                 >
                                     <div className={`h-2 rounded-full transition-all duration-500 
@@ -408,7 +408,8 @@ const Hero = () => {
                          hover:bg-white/10 transition-all duration-300 group
                          flex items-center justify-center shadow-lg
                          focus:outline-none focus:ring-2 focus:ring-white/50"
-                                aria-label="Servicio anterior"
+                                aria-label="Ver servicio anterior en el carrusel"
+
                             >
                                 <svg className="w-6 h-6 text-white transition-transform duration-300 group-hover:-translate-x-1"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -422,7 +423,8 @@ const Hero = () => {
                          hover:bg-white/10 transition-all duration-300 group
                          flex items-center justify-center shadow-lg
                          focus:outline-none focus:ring-2 focus:ring-white/50"
-                                aria-label="Siguiente servicio"
+                                aria-label="Ver siguiente servicio en el carrusel"
+
                             >
                                 <svg className="w-6 h-6 text-white transition-transform duration-300 group-hover:translate-x-1"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -88,7 +88,7 @@ const Testimonial = () => {
 
                                 <img
                                     src={ceoImage}
-                                    alt="Ivan Borjas - CEO de PUNCHALL"
+                                    alt="Ivan Borjas - CEO de Punchay"
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
                                         // Fallback si la imagen no carga
@@ -172,7 +172,7 @@ const Testimonial = () => {
 
                                 <blockquote className="space-y-6">
                                     <p className="text-2xl sm:text-3xl text-neutral-800 font-light leading-relaxed">
-                                        En PUNCHALL creemos que la tecnología no solo conecta,
+                                        En Punchay creemos que la tecnología no solo conecta,
                                         <span className="font-semibold text-neutral-900"> también transforma</span>.
                                     </p>
 

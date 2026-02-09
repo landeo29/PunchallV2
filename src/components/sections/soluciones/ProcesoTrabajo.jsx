@@ -238,7 +238,7 @@ const ProcesoTrabajo = () => {
                                 <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white/70 shadow-2xl">
                                     <img
                                         src={imgProceso}
-                                        alt="Proceso de trabajo PUNCHALL"
+                                        alt="Proceso de trabajo Punchay"
                                         className="w-full h-auto"
                                         style={{
                                             transform: `scale(${1 + scrollProgress * 0.05})`,

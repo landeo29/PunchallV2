@@ -250,7 +250,7 @@ const Inclusion = () => {
                                                     </p>
                                                     <div className="flex items-center gap-3">
                                                         <div className="h-px flex-1 bg-gradient-to-r from-white/40 to-transparent" />
-                                                        <span className="text-sm font-semibold text-white/80">Equipo PUNCHALL</span>
+                                                        <span className="text-sm font-semibold text-white/80">Equipo Punchay</span>
                                                     </div>
                                                 </div>
                                             </div>

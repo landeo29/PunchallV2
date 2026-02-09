@@ -257,7 +257,7 @@ const MissionVision = () => {
                         <div className="flex items-center justify-center gap-3 mt-6">
                             <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan-500" />
                             <cite className="text-sm font-semibold text-neutral-600 not-italic uppercase tracking-wider">
-                                Equipo PUNCHALL
+                                Equipo Punchay
                             </cite>
                             <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-500" />
                         </div>

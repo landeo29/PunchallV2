@@ -4,6 +4,7 @@ import Testimonial from "../components/sections/inicio/Testimonial.jsx";
 import TechStack from "../components/sections/inicio/TechStack.jsx";
 import PropuestaValor from "../components/sections/inicio/PropuestaValor.jsx";
 import ServiciosDestacados from "../components/sections/inicio/ServiciosDestacados.jsx";
+import CasosUso from "../components/sections/inicio/CasosUso.jsx";
 
 const Inicio = () => {
     return (
@@ -12,6 +13,7 @@ const Inicio = () => {
             <WaveSlider />
             <PropuestaValor />
             <ServiciosDestacados />
+            <CasosUso />
             <Testimonial />
             <TechStack />
 

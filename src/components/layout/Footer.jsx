@@ -81,7 +81,7 @@ const Footer = () => {
                             <div className="flex justify-center md:justify-start">
                                 <img
                                     src={logo}
-                                    alt="PUNCHALL Logo"
+                                    alt="Punchay Logo"
                                     className="h-16 w-auto transition-transform duration-300 group-hover:scale-105"
                                     onError={(e) => {
                                         e.target.style.display = 'none';
@@ -96,7 +96,7 @@ const Footer = () => {
                                                   d="M13 10V3L4 14h7v7l9-11h-7z" />
                                         </svg>
                                     </div>
-                                    <span className="text-2xl font-black text-white">PUNCHALL</span>
+                                    <span className="text-2xl font-black text-white">Punchay</span>
                                 </div>
                             </div>
                         </Link>
@@ -221,7 +221,7 @@ const Footer = () => {
                             hover:bg-blue-600 hover:border-blue-600 hover:text-white
                             transition-all duration-300
                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-neutral-900"
-                            aria-label={social.name}
+                            aria-label={`Visitar perfil de Punchay en ${social.name} - Se abre en nueva ventana`}
                             >
                             <div className="w-5 h-5 transition-transform duration-300 group-hover:scale-110">
                         {social.icon}
@@ -245,7 +245,7 @@ const Footer = () => {
 
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-neutral-500">
                 <p className="flex items-center gap-2">
-                    <span>© {currentYear} PUNCHALL</span>
+                    <span>© {currentYear} Punchay</span>
                     <span className="hidden sm:inline">•</span>
                     <span className="hidden sm:inline">Todos los derechos reservados</span>
                 </p>
